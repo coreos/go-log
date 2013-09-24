@@ -1,7 +1,7 @@
-go-logging
+go-log
 ==========
 
-go-logging is a simple logging library for Go which supports logging to
+go-log is a simple logging library for Go which supports logging to
 systemd.
 
 ### Examples
@@ -10,7 +10,7 @@ This example uses the default log to log to standard out and (if available) to s
 ```go
 package main
 import (
-	"github.com/sakana/go-logging/log"
+	"github.com/coreos/go-log/log"
 )
 
 func main() {
@@ -24,7 +24,7 @@ func main() {
 package main
 
 import (
-	"github.com/sakana/go-logging/log"
+	"github.com/coreos/go-log/log"
 	"os"
 )
 
@@ -43,7 +43,7 @@ This example only logs messages with priority `PriErr` and greater.
 package main
 
 import (
-	"github.com/sakana/go-logging/log"
+	"github.com/coreos/go-log/log"
 	"os"
 )
 
