@@ -1,4 +1,5 @@
 package log
+
 // Copyright 2013, David Fisher. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,6 +29,14 @@ const AsyncBuffer = 100
 
 type Sink interface {
 	Log(Fields)
+}
+
+type nullSink struct{}
+
+func (sink *nullSink) Log(fields Fields) {}
+
+func NullSink() Sink {
+	return &nullSink{}
 }
 
 type writerSink struct {
@@ -123,5 +132,24 @@ func JournalFallbackSink(out io.Writer, format string, fields []string) Sink {
 			format: format,
 			fields: fields,
 		},
+	}
+}
+
+type priorityFilter struct {
+	priority Priority
+	target   Sink
+}
+
+func (filter *priorityFilter) Log(fields Fields) {
+	// lower priority values indicate more important messages
+	if fields["priority"].(Priority) <= filter.priority {
+		filter.target.Log(fields)
+	}
+}
+
+func PriorityFilter(priority Priority, target Sink) Sink {
+	return &priorityFilter{
+		priority: priority,
+		target:   target,
 	}
 }
