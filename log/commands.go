@@ -18,6 +18,7 @@ package log
 
 import (
 	"fmt"
+	"os"
 )
 
 var BasicFormat = "%s [%9s] %s- %s\n"
@@ -153,4 +154,61 @@ func Debug(v ...interface{}) {
 }
 func Debugf(format string, v ...interface{}) {
 	defaultLogger.Log(PriDebug, fmt.Sprintf(format, v...))
+}
+
+// Standard library log functions
+
+func (logger *Logger)Fatalln (v ...interface{}) {
+	logger.Log(PriCrit, v...)
+	os.Exit(1)
+}
+func (logger *Logger)Fatalf (format string, v ...interface{}) {
+	logger.Logf(PriCrit, format, v...)
+	os.Exit(1)
+}
+
+func (logger *Logger)Panicln (v ...interface{}) {
+	s := fmt.Sprint(v...)
+	logger.Log(PriErr, s)
+	panic(s)
+}
+func (logger *Logger)Panicf (format string, v ...interface{}) {
+	s := fmt.Sprintf(format, v...)
+	logger.Log(PriErr, s)
+	panic(s)
+}
+
+func (logger *Logger)Println (v ...interface{}) {
+	logger.Log(PriInfo, v...)
+}
+func (logger *Logger)Printf (format string, v ...interface{}) {
+	logger.Logf(PriInfo, format, v...)
+}
+
+
+func Fatalln (v ...interface{}) {
+	defaultLogger.Log(PriCrit, v...)
+	os.Exit(1)
+}
+func Fatalf (format string, v ...interface{}) {
+	defaultLogger.Logf(PriCrit, format, v...)
+	os.Exit(1)
+}
+
+func Panicln (v ...interface{}) {
+	s := fmt.Sprint(v...)
+	defaultLogger.Log(PriErr, s)
+	panic(s)
+}
+func Panicf (format string, v ...interface{}) {
+	s := fmt.Sprintf(format, v...)
+	defaultLogger.Log(PriErr, s)
+	panic(s)
+}
+
+func Println (v ...interface{}) {
+	defaultLogger.Log(PriInfo, v...)
+}
+func Printf (format string, v ...interface{}) {
+	defaultLogger.Logf(PriInfo, format, v...)
 }
