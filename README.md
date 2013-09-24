@@ -6,16 +6,16 @@ systemd.
 
 ### Examples
 #### Default
-This example uses the default logger to log to standard out and (if available) to systemd:
+This example uses the default log to log to standard out and (if available) to systemd:
 ```go
 package main
 import (
-	"github.com/sakana/go-logging/logger"
+	"github.com/sakana/go-logging/log"
 )
 
 func main() {
-	logger.Info("Hello World.")
-	logger.Error("There's nothing more to this program.")
+	log("Hello World.")
+	log("There's nothing more to this program.")
 }
 ```
 
@@ -24,13 +24,13 @@ func main() {
 package main
 
 import (
-	"github.com/sakana/go-logging/logger"
+	"github.com/sakana/go-logging/log"
 	"os"
 )
 
 func main() {
-	l := logger.NewSimple(
-		logger.WriterSink( os.Stderr,
+	l := log(
+		log( os.Stderr,
 			"%s: %s[%d] %s\n",
 			[]string{"priority", "executable", "pid", "message"}))
 	l.Info("Here's a differently formatted log message.")
@@ -43,15 +43,15 @@ This example only logs messages with priority `PriErr` and greater.
 package main
 
 import (
-	"github.com/sakana/go-logging/logger"
+	"github.com/sakana/go-logging/log"
 	"os"
 )
 
 func main() {
-	l := logger.NewSimple(
+	l := log(
 		&PriorityFilter{
-			logger.PriErr,
-			logger.WriterSink(os.Stdout, logger.BasicFormat, logger.BasicFields),
+			log,
+			log.WriterSink(os.Stdout, log.BasicFormat, log.BasicFields),
 		})
 	l.Info("This will be filtered out")
 	l.Info("and not printed at all.")
@@ -60,13 +60,13 @@ func main() {
 }
 
 type PriorityFilter struct {
-	priority logger.Priority
-	target   logger.Sink
+	priority log.Priority
+	target   log.Sink
 }
 
-func (filter *PriorityFilter) Log(fields logger.Fields) {
+func (filter *PriorityFilter) Log(fields log.Fields) {
 	// lower priority values indicate more important messages
-	if fields["priority"].(logger.Priority) <= filter.priority {
+	if fields["priority"].(log.Priority) <= filter.priority {
 		filter.target.Log(fields)
 	}
 }
@@ -77,7 +77,7 @@ The following fields are available for use in all sinks:
 ```go
 "prefix"       string              // static field available to all sinks
 "seq"          uint64              // auto-incrementing sequence number
-"start_time"   time.Time           // start time of the logger
+"start_time"   time.Time           // start time of the log
 "time"         string              // formatted time of log entry
 "full_time"    time.Time           // time of log entry
 "rtime"        time.Duration       // relative time of log entry since started
@@ -93,7 +93,7 @@ In addition, if `verbose=true` is passed to `New()`, the following (somewhat exp
 ```
 
 ### Logging functions
-All these functions can also be called directly to use the default logger.
+All these functions can also be called directly to use the default log.
 ```go
 func (*Logger) Log(priority Priority, message string)
 func (*Logger) Logf(priority Priority, format string, v ...interface{})

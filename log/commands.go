@@ -1,3 +1,4 @@
+package log
 // Copyright 2013, David Fisher. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +15,6 @@
 //
 // author: David Fisher <ddf1991@gmail.com>
 // based on previous package by: Cong Ding <dinggnu@gmail.com>
-package logger
 
 import (
 	"fmt"
