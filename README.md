@@ -2,9 +2,7 @@ go-logging
 ==========
 
 go-logging is a simple logging library for Go which supports logging to
-systemd.  It is a mostly-from-scratch rewrite of
-[ccding/go-logging](https://github.com/ccding/go-logging) with some features
-removed. 
+systemd.
 
 ### Examples
 #### Default
@@ -86,7 +84,7 @@ The following fields are available for use in all sinks:
 "pid"          int                 // process id
 "executable"   string              // executable filename
 ```
-In addition, if `verbose=true` is passed to `New()`, the the following (somewhat expensive) runtime fields are also available:
+In addition, if `verbose=true` is passed to `New()`, the following (somewhat expensive) runtime fields are also available:
 ```go
 "funcname"     string              // function name where the log function was called
 "lineno"       int                 // line number where the log function was called
@@ -116,3 +114,9 @@ func (*Logger) Infof(format string, v...interface{})
 func (*Logger) Debug(message string)
 func (*Logger) Debugf(format string, v...interface{})
 ```
+
+### Acknowledgements
+This package is a mostly-from-scratch rewrite of
+[ccding/go-logging](https://github.com/ccding/go-logging) with some features
+removed and systemd support added. 
+
