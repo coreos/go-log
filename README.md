@@ -14,8 +14,8 @@ import (
 )
 
 func main() {
-	log("Hello World.")
-	log("There's nothing more to this program.")
+	log.Info("Hello World.")
+	log.Error("There's nothing more to this program.")
 }
 ```
 
@@ -29,8 +29,8 @@ import (
 )
 
 func main() {
-	l := log(
-		log( os.Stderr,
+	l := log.NewSimple(
+		log.WriterSink(os.Stderr,
 			"%s: %s[%d] %s\n",
 			[]string{"priority", "executable", "pid", "message"}))
 	l.Info("Here's a differently formatted log message.")
@@ -48,9 +48,9 @@ import (
 )
 
 func main() {
-	l := log(
+	l := log.NewSimple(
 		&PriorityFilter{
-			log,
+			log.PriErr,
 			log.WriterSink(os.Stdout, log.BasicFormat, log.BasicFields),
 		})
 	l.Info("This will be filtered out")

@@ -22,9 +22,9 @@ import (
 )
 
 var BasicFormat = "%s [%9s] %s- %s\n"
-var BasicFields = []string{"time", "priority", "prefix", "v..."}
+var BasicFields = []string{"time", "priority", "prefix", "message"}
 var RichFormat = "%s [%9s] %d %s - %s:%s:%d - %s\n"
-var RichFields = []string{"full_time", "priority", "seq", "prefix", "filename", "funcname", "lineno", "v..."}
+var RichFields = []string{"full_time", "priority", "seq", "prefix", "filename", "funcname", "lineno", "message"}
 
 // This function has an unusual name to aid in finding it while walking the
 // stack. We need to do some dead reckoning from this function to access the
@@ -32,7 +32,7 @@ var RichFields = []string{"full_time", "priority", "seq", "prefix", "filename", 
 func (logger *Logger) Log(priority Priority, v ...interface{}) {
 	fields := logger.fieldValues()
 	fields["priority"] = priority
-	fields["v..."] = fmt.Sprint(v...)
+	fields["message"] = fmt.Sprint(v...)
 	for _, sink := range logger.sinks {
 		sink.Log(fields)
 	}
