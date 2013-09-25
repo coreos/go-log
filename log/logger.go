@@ -19,8 +19,6 @@ package log
 
 import (
 	"bitbucket.org/kardianos/osext"
-	"github.com/coreos/go-systemd/journal"
-	"io"
 	"os"
 	"path"
 	"time"
@@ -68,21 +66,8 @@ func NewSimple(sinks ...Sink) *Logger {
 	return New("", false, sinks...)
 }
 
-func Assemble(prefix string, verbose bool, writer io.Writer, format string, variables []string) *Logger {
-	sinks := make([]Sink, 0)
-	sinks = append(sinks, WriterSink(writer, format, variables))
-	if journal.Enabled() {
-		sinks = append(sinks, JournalSink())
-	}
-	return New(prefix, verbose, sinks...)
-}
-
-func AssembleSimple(prefix string, format string, variables []string) *Logger {
-	return Assemble(prefix, false, os.Stdout, format, variables)
-}
-
 var defaultLogger *Logger
 
 func init() {
-	defaultLogger = AssembleSimple("", BasicFormat, BasicFields)
+	defaultLogger = NewSimple(CombinedSink(os.Stdout, BasicFormat, BasicFields))
 }
