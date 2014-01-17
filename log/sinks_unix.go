@@ -24,7 +24,6 @@ import (
 	"github.com/coreos/go-systemd/journal"
 	"io"
 	"strings"
-	"sync"
 )
 
 type journalSink struct{}
