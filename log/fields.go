@@ -1,4 +1,5 @@
 package log
+
 // Copyright 2013, CoreOS, Inc. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -57,7 +58,7 @@ func setVerboseFields(fields Fields) {
 
 	for _, pc := range callers {
 		f := runtime.FuncForPC(pc)
-		if !strings.Contains(f.Name(), "logger.(*Logger)") {
+		if !strings.Contains(f.Name(), "log.(*Logger)") {
 			fields["funcname"] = f.Name()
 			pathname, lineno := f.FileLine(pc)
 			fields["lineno"] = lineno
