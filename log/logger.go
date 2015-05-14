@@ -1,4 +1,5 @@
 package log
+
 // Copyright 2013, CoreOS, Inc. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,10 +18,11 @@ package log
 // based on previous package by: Cong Ding <dinggnu@gmail.com>
 
 import (
-	"bitbucket.org/kardianos/osext"
 	"os"
 	"path"
 	"time"
+
+	"github.com/kardianos/osext"
 )
 
 // Logger is user-immutable immutable struct which can log to several outputs
