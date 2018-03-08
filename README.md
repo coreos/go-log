@@ -1,5 +1,12 @@
-go-log
-==========
+# _Deprecation notice_
+
+This project is currently unmaintained and deprecated.
+
+For those looking for alternative logging frameworks for Go,
+[logrus](https://github.com/sirupsen/logrus) or
+[glog](https://github.com/golang/glog) are two modern popular choices.
+
+# go-log
 
 go-log is a simple logging library for Go which supports logging to
 systemd.
